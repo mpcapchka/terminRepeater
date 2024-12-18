@@ -74,6 +74,7 @@ namespace TerminRepeater.ViewModel
             {
                 if (container == null) return;
                 dataManager.DeleteContainer(container.Name);
+                Items.Remove(container);
             }
             catch (Exception ex) { logger.Debug(ex); }
         }
@@ -110,7 +111,8 @@ namespace TerminRepeater.ViewModel
             {
                 if (module == null) return;
                 var container = Items.First(x => x.Modules.Contains(module));
-
+                dataManager.DeleteModule(container.Name, module.Name);
+                container.Modules.Remove(module);
             }
             catch (Exception ex) { logger.Debug(ex); }
         }

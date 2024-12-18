@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.Abstractions;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO.Abstractions;
 
 namespace TerminRepeater.Services
 {
     public interface IBuildInfo
     {
         IFileSystem FileSystem { get; }
+        Version AppVersion { get; }
         string LocalDataStorageDirectory { get; }
     }
 }

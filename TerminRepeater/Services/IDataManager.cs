@@ -50,6 +50,7 @@ namespace TerminRepeater.Services
         private readonly string localDirectory;
         private readonly string containerExtension = "zip";
         private readonly string moduleExtension = "json";
+        private readonly string moduleDataExtension = "csv";
         #endregion
 
         #region Constructors
@@ -167,6 +168,54 @@ namespace TerminRepeater.Services
                 oldEntryStream.CopyTo(newEntryStream);
             }
             oldEnty.Delete();
+        }
+        public void AppendModule(string containerName, ModuleItem module)
+        {
+            var filePath = fileSystem.Path.Combine(localDirectory, $"{containerName}.{containerExtension}");
+            if (!fileSystem.File.Exists(filePath))
+                throw new FileNotFoundException(filePath);
+            else if (module == null)
+                throw new ArgumentNullException(nameof(module));
+            else if (IsSomeTerminIdDuplicated(module.Items))
+                throw new ArgumentNullException("Some ids were duplicated");
+            var moduleEntryName = $"{module.Name}.{moduleExtension}";
+            using var stream = fileSystem.FileStream.New(filePath, FileMode.Open, FileAccess.ReadWrite);
+            using var archive = new ZipArchive(stream, ZipArchiveMode.Update);
+            if (archive.Entries.Any(x => x.Name == moduleEntryName))
+                throw new InvalidOperationException($"The module with the such name already exists in archive: {module.Name}.");
+            var entry = archive.CreateEntry(moduleEntryName);
+            var serializer = new JsonSerializer();
+            using var entryStream = entry.Open();
+            using var sw = new StreamWriter(entryStream);
+            using var jsonWriter = new JsonTextWriter(sw);
+            serializer.Serialize(jsonWriter, module);
+        }
+        public void DeleteModule(string containerName, string moduleName)
+        {
+            var filePath = fileSystem.Path.Combine(localDirectory, $"{containerName}.{containerExtension}");
+            if (!fileSystem.File.Exists(filePath))
+                throw new FileNotFoundException(filePath);
+            if (string.IsNullOrWhiteSpace(moduleName))
+                throw new ArgumentNullException(nameof(moduleName));
+            var moduleEntryName = $"{moduleName}.{moduleExtension}";
+            using var stream = fileSystem.FileStream.New(filePath, FileMode.Open, FileAccess.ReadWrite);
+            using var archive = new ZipArchive(stream, ZipArchiveMode.Update);
+            var entry = archive.GetEntry(moduleEntryName);
+            if (entry == null)
+                throw new ArgumentException($"There is no module with such name: {moduleName}.");
+            entry.Delete();
+        }
+        public bool ContainerNameAcceptable(string? containerName)
+        {
+            var chars = fileSystem.Path.GetInvalidFileNameChars();
+            return !string.IsNullOrWhiteSpace(containerName)
+                && !containerName.Any(x => chars.Contains(x) || x == '.');
+        }
+        public bool ModuleNameAcceptable(string? moduleName)
+        {
+            var chars = fileSystem.Path.GetInvalidFileNameChars();
+            return !string.IsNullOrWhiteSpace(moduleName)
+                && !moduleName.Any(x => chars.Contains(x) || x == '.');
         }
         #endregion
 

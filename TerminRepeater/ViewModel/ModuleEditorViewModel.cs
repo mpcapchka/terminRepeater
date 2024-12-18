@@ -16,8 +16,10 @@ namespace TerminRepeater.ViewModel
         #endregion
 
         #region Constructors
-        public ModuleEditorViewModel(IContentManager contentManager, IFileSystem fileSystem)
-            : base(contentManager)
+        public ModuleEditorViewModel(IContentManager contentManager,
+            IFileSystem fileSystem,
+            ILoggerService logger)
+            : base(contentManager, logger)
         {
             this.fileSystem = fileSystem;
         }

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminRepeater", "TerminRepeater\TerminRepeater.csproj", "{F480541B-AEE0-4551-8680-D40A2493AE1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TerminRepeater", "TerminRepeater\TerminRepeater.csproj", "{F480541B-AEE0-4551-8680-D40A2493AE1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminRepeater.Wpf", "TerminRepeater.Wpf\TerminRepeater.Wpf.csproj", "{01C9273F-0344-4A77-849C-CC57A99DDC4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F480541B-AEE0-4551-8680-D40A2493AE1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F480541B-AEE0-4551-8680-D40A2493AE1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F480541B-AEE0-4551-8680-D40A2493AE1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01C9273F-0344-4A77-849C-CC57A99DDC4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C9273F-0344-4A77-849C-CC57A99DDC4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01C9273F-0344-4A77-849C-CC57A99DDC4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01C9273F-0344-4A77-849C-CC57A99DDC4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
